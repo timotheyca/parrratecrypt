@@ -1,3 +1,4 @@
+print(5)
 f = open('Sbox', 'r')
 Sbox = eval(f.read())
 f.close()
@@ -92,7 +93,7 @@ def Cipher(in_b:bytearray, w:bytearray, Nr:int, Nb=4):
     
     SubBytes(state)
     ShiftRows(state)
-    AddRoundKey(state, w[Nr*Nb*4:])
+    AddRoundKey(state, w[Nr*Nb*4:(Nr+1)*Nb*4])
     
     return state
 
@@ -100,7 +101,7 @@ def Cipher(in_b:bytearray, w:bytearray, Nr:int, Nb=4):
 def InvCipher(in_b:bytearray, w:bytearray, Nr:int, Nb=4):
     state = bytearray(in_b)
     
-    AddRoundKey(state, w[Nr*Nb*4:])
+    AddRoundKey(state, w[Nr*Nb*4:(Nr+1)*Nb*4])
     
     for r in range(Nr - 1, 0, -1):
         InvShiftRows(state)
@@ -113,3 +114,10 @@ def InvCipher(in_b:bytearray, w:bytearray, Nr:int, Nb=4):
     AddRoundKey(state, w[:Nb*4])
     
     return state
+
+import random
+k1 = bytearray([random.randint(0, 255) for i in range(32)])
+w1 = KeyExpansion(k1, 8, 14)
+print('start')
+for i in range(10000):c1 = Cipher(_state, w1, 14)
+print('end')
