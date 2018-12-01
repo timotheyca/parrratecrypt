@@ -1,4 +1,3 @@
-print(5)
 f = open('Sbox', 'r')
 Sbox = eval(f.read())
 f.close()
@@ -11,11 +10,6 @@ f.close()
 f = open('Rcon', 'r')
 Rcon = eval(f.read())
 f.close()
-
-
-_state = 4*4*bytearray([0])
-for i in range(16):
-    _state[i]=i
 
 
 def vis():
@@ -114,10 +108,3 @@ def InvCipher(in_b:bytearray, w:bytearray, Nr:int, Nb=4):
     AddRoundKey(state, w[:Nb*4])
     
     return state
-
-import random
-k1 = bytearray([random.randint(0, 255) for i in range(32)])
-w1 = KeyExpansion(k1, 8, 14)
-print('start')
-for i in range(10000):c1 = Cipher(_state, w1, 14)
-print('end')
